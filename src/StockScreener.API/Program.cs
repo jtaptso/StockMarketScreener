@@ -147,6 +147,9 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+// Must be first — catches all exceptions from downstream middleware and controllers.
+app.UseMiddleware<StockScreener.API.Middleware.ExceptionHandlingMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
