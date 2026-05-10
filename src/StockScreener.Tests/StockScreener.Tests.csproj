@@ -18,4 +18,10 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\StockScreener.Domain\StockScreener.Domain.csproj" />
+    <ProjectReference Include="..\StockScreener.Application\StockScreener.Application.csproj" />
+    <ProjectReference Include="..\StockScreener.Infrastructure\StockScreener.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

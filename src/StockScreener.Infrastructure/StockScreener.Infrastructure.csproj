@@ -1,5 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <ItemGroup>
+    <ProjectReference Include="..\StockScreener.Domain\StockScreener.Domain.csproj" />
+    <ProjectReference Include="..\StockScreener.Application\StockScreener.Application.csproj" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
