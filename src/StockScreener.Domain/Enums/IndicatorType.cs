@@ -1,4 +1,6 @@
-enum IndicatorType
+namespace StockScreener.Domain.Enums;
+
+public enum IndicatorType
 {
     RSI, // Relative Strength Index
     SMA, // Simple Moving Average

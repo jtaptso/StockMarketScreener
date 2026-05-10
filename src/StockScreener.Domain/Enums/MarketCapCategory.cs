@@ -1,3 +1,5 @@
+namespace StockScreener.Domain.Enums;
+
 public enum MarketCapCategory
 {
     Micro,
