@@ -1,2 +1,8 @@
 <Solution>
+  <Project Path="StockScreener.API/StockScreener.API.csproj" />
+  <Project Path="StockScreener.Application/StockScreener.Application.csproj" />
+  <Project Path="StockScreener.Domain/StockScreener.Domain.csproj" />
+  <Project Path="StockScreener.Infrastructure/StockScreener.Infrastructure.csproj" />
+  <Project Path="StockScreener.Presentation/StockScreener.Presentation.csproj" />
+  <Project Path="StockScreener.Tests/StockScreener.Tests.csproj" />
 </Solution>
