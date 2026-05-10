@@ -1,0 +1,217 @@
+# ==============================================
+# .NET / ASP.NET Core
+# ==============================================
+
+# Build results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio cache/options
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.sln.ide
+
+# User-specific files
+*.rsuser
+*.user
+*.userosscache
+*.sln.docstates
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+TestResult.xml
+coverage*.json
+coverage*.xml
+coverage*.info
+
+# ==============================================
+# Blazor WebAssembly / .NET MAUI
+# ==============================================
+
+# Blazor boot data
+wwwroot/blazor.boot.json
+wwwroot/blazor.webassembly.js
+wwwroot/_framework/
+
+# .NET MAUI
+*.appxupload
+*.appxbundle
+*.appxsym
+
+# ==============================================
+# IDE / Editor
+# ==============================================
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+*.csproj.user
+
+# VS Code
+.settings/
+
+# Sublime Text
+*.sublime-*
+
+# Notepad++
+*.bak
+
+# ==============================================
+# Sensitive Configuration & Secrets
+# ==============================================
+
+# appsettings with secrets
+appsettings.*.json
+!appsettings.Template.json
+
+# Connection strings and secrets
+*.pfx
+*.pem
+*.key
+*.csr
+*.p12
+
+# Environment files
+.env
+.env.*
+.env.local
+secrets.json
+secrets.*.json
+
+# Azure Key Vault (downloads)
+*.blob
+
+# ==============================================
+# OS Generated
+# ==============================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.fuse_hidden*
+.Directory
+.Trash-*
+.Trash/
+
+# ==============================================
+# Logs & Temporary Files
+# ==============================================
+
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+dist/
+tmp/
+out/
+
+# ==============================================
+# Database
+# ==============================================
+
+*.mdf
+*.ldf
+*.bak
+*.sql
+*.bacpac
+
+# SQL Server localdb
+*.mdf
+
+# ==============================================
+# Container / Docker
+# ==============================================
+
+.docker/
+docker-compose.override.yml
+
+# Container build context
+*.dockerignore
+!**/.dockerignore
+
+# ==============================================
+# Node.js (if using client-side tooling)
+# ==============================================
+
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# ==============================================
+# Static Analysis / Code Coverage
+# ==============================================
+
+perf BenchmarkDotNet.Artifacts/
+BenchmarkDotNet.Diagnostics.*
+coverage/
+OpenCover/
+NCrunch/
+*.coverlet
+coverlet.build.path
+
+# ==============================================
+# Misc
+# ==============================================
+
+# Git merge backup files
+*.orig
+
+# Web compiler cache
+webcompiler/
+
+# Nancy
+nancy.cache/
+
+# StyleCop
+StyleCopReport.xml
+
+# Sarif files
+*.sarif
+
+# Temp folders
+[Tt]emp/
+_tmp/
+
+# Intermediate files
+*.ilk
+*.meta
+*.pdb
+*.cache
+
+# Localization
+Localization/
+Resources/
+
+# Auto generated files
+**/Generated*.cs
+**/Generated*.razor
