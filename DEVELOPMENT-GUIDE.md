@@ -18,62 +18,62 @@ This guide is the single source of truth for the development sequence. Each phas
 
 1. **Create solution and projects**
    ```bash
-   dotnet new sln -n Bourse
-   dotnet new classlib -n Bourse.Domain           -f net10.0
-   dotnet new classlib -n Bourse.Application      -f net10.0
-   dotnet new classlib -n Bourse.Infrastructure   -f net10.0
-   dotnet new webapi   -n Bourse.API              -f net10.0
-   dotnet new blazorwasm -n Bourse.Presentation   -f net10.0
-   dotnet new xunit    -n Bourse.Tests            -f net10.0
+   dotnet new sln -n StockScreener
+   dotnet new classlib -n StockScreener.Domain           -f net10.0
+   dotnet new classlib -n StockScreener.Application      -f net10.0
+   dotnet new classlib -n StockScreener.Infrastructure   -f net10.0
+   dotnet new webapi   -n StockScreener.API              -f net10.0
+   dotnet new blazorwasm -n StockScreener.Presentation   -f net10.0
+   dotnet new xunit    -n StockScreener.Tests            -f net10.0
    ```
 
 2. **Add projects to solution**
    ```bash
-   dotnet sln add Bourse.Domain/Bourse.Domain.csproj
-   dotnet sln add Bourse.Application/Bourse.Application.csproj
-   dotnet sln add Bourse.Infrastructure/Bourse.Infrastructure.csproj
-   dotnet sln add Bourse.API/Bourse.API.csproj
-   dotnet sln add Bourse.Presentation/Bourse.Presentation.csproj
-   dotnet sln add Bourse.Tests/Bourse.Tests.csproj
+   dotnet sln add StockScreener.Domain/StockScreener.Domain.csproj
+   dotnet sln add StockScreener.Application/StockScreener.Application.csproj
+   dotnet sln add StockScreener.Infrastructure/StockScreener.Infrastructure.csproj
+   dotnet sln add StockScreener.API/StockScreener.API.csproj
+   dotnet sln add StockScreener.Presentation/StockScreener.Presentation.csproj
+   dotnet sln add StockScreener.Tests/StockScreener.Tests.csproj
    ```
 
 3. **Wire up project references (dependency rules)**
    ```bash
    # Application depends on Domain
-   dotnet add Bourse.Application reference Bourse.Domain
+   dotnet add StockScreener.Application reference StockScreener.Domain
 
    # Infrastructure depends on Domain + Application
-   dotnet add Bourse.Infrastructure reference Bourse.Domain
-   dotnet add Bourse.Infrastructure reference Bourse.Application
+   dotnet add StockScreener.Infrastructure reference StockScreener.Domain
+   dotnet add StockScreener.Infrastructure reference StockScreener.Application
 
    # API depends on Application + Infrastructure (composition root)
-   dotnet add Bourse.API reference Bourse.Application
-   dotnet add Bourse.API reference Bourse.Infrastructure
+   dotnet add StockScreener.API reference StockScreener.Application
+   dotnet add StockScreener.API reference StockScreener.Infrastructure
 
    # Presentation depends on Application (DTOs only, via API calls)
    # No direct project ref — communicates via HTTP/SignalR
 
    # Tests reference all layers
-   dotnet add Bourse.Tests reference Bourse.Domain
-   dotnet add Bourse.Tests reference Bourse.Application
-   dotnet add Bourse.Tests reference Bourse.Infrastructure
+   dotnet add StockScreener.Tests reference StockScreener.Domain
+   dotnet add StockScreener.Tests reference StockScreener.Application
+   dotnet add StockScreener.Tests reference StockScreener.Infrastructure
    ```
 
 4. **Install NuGet packages**
 
-   | Project | Package |
-   |---------|---------|
-   | Infrastructure | `Microsoft.EntityFrameworkCore.SqlServer` |
-   | Infrastructure | `Microsoft.EntityFrameworkCore.Tools` |
-   | Infrastructure | `AutoMapper` |
-   | Infrastructure | `Microsoft.Extensions.Http` |
-   | Infrastructure | `Microsoft.AspNetCore.SignalR.Client` |
-   | API | `Microsoft.AspNetCore.Authentication.JwtBearer` |
-   | API | `Swashbuckle.AspNetCore` (OpenAPI) |
-   | Presentation | `Syncfusion.Blazor.Grid` |
-   | Presentation | `Syncfusion.Blazor.Charts` |
-   | Presentation | `Microsoft.AspNetCore.SignalR.Client` |
-   | Tests | `Moq`, `FluentAssertions`, `Microsoft.EntityFrameworkCore.InMemory` |
+   | Project        | Package                                                             |
+   | -------------- | ------------------------------------------------------------------- |
+   | Infrastructure | `Microsoft.EntityFrameworkCore.SqlServer`                           |
+   | Infrastructure | `Microsoft.EntityFrameworkCore.Tools`                               |
+   | Infrastructure | `AutoMapper`                                                        |
+   | Infrastructure | `Microsoft.Extensions.Http`                                         |
+   | Infrastructure | `Microsoft.AspNetCore.SignalR.Client`                               |
+   | API            | `Microsoft.AspNetCore.Authentication.JwtBearer`                     |
+   | API            | `Swashbuckle.AspNetCore` (OpenAPI)                                  |
+   | Presentation   | `Syncfusion.Blazor.Grid`                                            |
+   | Presentation   | `Syncfusion.Blazor.Charts`                                          |
+   | Presentation   | `Microsoft.AspNetCore.SignalR.Client`                               |
+   | Tests          | `Moq`, `FluentAssertions`, `Microsoft.EntityFrameworkCore.InMemory` |
 
 5. **Verify the build**
    ```bash
@@ -88,18 +88,18 @@ This guide is the single source of truth for the development sequence. Each phas
 
 ### Steps
 
-1. **Enums** (`Bourse.Domain/Enums/`)
+1. **Enums** (`StockScreener.Domain/Enums/`)
    - `Exchange.cs` — NYSE, NASDAQ, AMEX, OTC
    - `MarketCapCategory.cs` — Micro, Small, Mid, Large, Mega
    - `SortOrder.cs` — Ascending, Descending
    - `IndicatorType.cs` — RSI, SMA, MACD, BollingerBands, ATR
 
-2. **Value Objects** (`Bourse.Domain/ValueObjects/`)
+2. **Value Objects** (`StockScreener.Domain/ValueObjects/`)
    - `Money.cs` — immutable decimal + currency, validation (non-negative)
    - `Percentage.cs` — immutable decimal, validation (0-100 for RSI-style)
    - `DateRange.cs` — start/end date with validation (start ≤ end)
 
-3. **Entities** (`Bourse.Domain/Entities/`)
+3. **Entities** (`StockScreener.Domain/Entities/`)
    - `Stock.cs` — core stock data (Symbol, CompanyName, Exchange, Sector, MarketCap, CurrentPrice)
    - `PriceHistory.cs` — OHLCV per day, FK to Stock
    - `Fundamentals.cs` — PE, PB, PS, EPS, DividendYield, Beta, ROE, etc., FK to Stock
@@ -108,18 +108,18 @@ This guide is the single source of truth for the development sequence. Each phas
    - `WatchlistItem.cs` — FK to Watchlist + Stock
    - `FilterPreset.cs` — serialized filter JSON, name, description
 
-4. **Repository Interfaces** (`Bourse.Domain/Interfaces/Repositories/`)
+4. **Repository Interfaces** (`StockScreener.Domain/Interfaces/Repositories/`)
    - `IStockRepository.cs`
    - `IPriceHistoryRepository.cs`
    - `IFundamentalsRepository.cs`
    - `IWatchlistRepository.cs`
 
-5. **Service Interfaces** (`Bourse.Domain/Interfaces/Services/`)
+5. **Service Interfaces** (`StockScreener.Domain/Interfaces/Services/`)
    - `IIndicatorCalculator.cs` — RSI, MACD, SMA, ATR, Bollinger Bands
    - `IScreenerEngine.cs` — `Filter(IEnumerable<Stock>, ScreenerFilter)` 
    - `IMarketDataProvider.cs` — port for external data (Finnhub/AlphaVantage)
 
-6. **Domain Services** (`Bourse.Domain/Services/`)
+6. **Domain Services** (`StockScreener.Domain/Services/`)
    - `IndicatorCalculator.cs` — pure math, no I/O
    - `ScreenerEngine.cs` — stateless filter logic (AND all active criteria)
 
@@ -133,7 +133,7 @@ This guide is the single source of truth for the development sequence. Each phas
 
 ### Steps
 
-1. **DTOs** (`Bourse.Application/DTOs/`)
+1. **DTOs** (`StockScreener.Application/DTOs/`)
    - `StockDto.cs`
    - `PriceHistoryDto.cs`
    - `FundamentalsDto.cs`
@@ -141,13 +141,13 @@ This guide is the single source of truth for the development sequence. Each phas
    - `ScreenerResultDto.cs` — paged result with `PageInfo`
    - `WatchlistDto.cs`
 
-2. **Application Interfaces** (`Bourse.Application/Interfaces/`)
+2. **Application Interfaces** (`StockScreener.Application/Interfaces/`)
    - `IScreenerService.cs`
    - `IStockService.cs`
    - `IMarketDataService.cs`
    - `IWatchlistService.cs`
 
-3. **Application Services** (`Bourse.Application/Services/`)
+3. **Application Services** (`StockScreener.Application/Services/`)
    - `ScreenerService.cs` — delegates to `IScreenerEngine` + `IStockRepository`
    - `StockService.cs` — get by symbol, price history
    - `MarketDataService.cs` — orchestrates background sync via `IMarketDataProvider`
@@ -163,39 +163,39 @@ This guide is the single source of truth for the development sequence. Each phas
 
 ### Steps
 
-1. **EF Core DbContext** (`Bourse.Infrastructure/Persistence/AppDbContext.cs`)
+1. **EF Core DbContext** (`StockScreener.Infrastructure/Persistence/AppDbContext.cs`)
    - `DbSet<Stock>`, `DbSet<PriceHistory>`, `DbSet<Fundamentals>`, `DbSet<TechnicalIndicators>`, `DbSet<Watchlist>`, `DbSet<WatchlistItem>`, `DbSet<FilterPreset>`
 
-2. **Entity Configurations** (`Bourse.Infrastructure/Persistence/Configurations/`)
+2. **Entity Configurations** (`StockScreener.Infrastructure/Persistence/Configurations/`)
    - One `IEntityTypeConfiguration<T>` per entity
    - Define indexes: `IX_Stocks_Symbol`, `IX_PriceHistory_StockId_Date`, `IX_TechnicalIndicators_StockId_Date`, `IX_Fundamentals_StockId`
    - Enforce unique constraint on `Stocks.Symbol`
 
-3. **Repository Implementations** (`Bourse.Infrastructure/Persistence/Repositories/`)
+3. **Repository Implementations** (`StockScreener.Infrastructure/Persistence/Repositories/`)
    - `StockRepository.cs` — implements `IStockRepository`
    - `PriceHistoryRepository.cs`
    - `FundamentalsRepository.cs`
    - `WatchlistRepository.cs`
 
-4. **AutoMapper Profile** (`Bourse.Infrastructure/Mapping/MappingProfile.cs`)
+4. **AutoMapper Profile** (`StockScreener.Infrastructure/Mapping/MappingProfile.cs`)
    - Entity → DTO mappings for all types
 
-5. **External API Clients** (`Bourse.Infrastructure/External/`)
+5. **External API Clients** (`StockScreener.Infrastructure/External/`)
    - `FinnhubClient.cs` — implements `IMarketDataProvider`, typed `HttpClient`
    - `AlphaVantageClient.cs` — fallback provider
    - Response models: `FinnhubQuoteResponse.cs`, `FinnhubCandleResponse.cs`
 
-6. **Caching** (`Bourse.Infrastructure/Services/CachingService.cs`)
+6. **Caching** (`StockScreener.Infrastructure/Services/CachingService.cs`)
    - Wrap `IMemoryCache`, define cache keys and TTLs
 
-7. **Background Services** (`Bourse.Infrastructure/Services/`)
+7. **Background Services** (`StockScreener.Infrastructure/Services/`)
    - `BackgroundDataSyncService.cs` — `IHostedService`, syncs daily price + fundamental data from Finnhub
    - `SignalRMarketDataService.cs` — broadcasts real-time price updates
 
 8. **EF Core Migrations**
    ```bash
-   dotnet ef migrations add InitialCreate --project Bourse.Infrastructure --startup-project Bourse.API
-   dotnet ef database update --project Bourse.Infrastructure --startup-project Bourse.API
+   dotnet ef migrations add InitialCreate --project StockScreener.Infrastructure --startup-project StockScreener.API
+   dotnet ef database update --project StockScreener.Infrastructure --startup-project StockScreener.API
    ```
 
 9. **Write integration tests** for repositories using `InMemory` provider
@@ -215,16 +215,16 @@ This guide is the single source of truth for the development sequence. Each phas
    - Add OpenAPI / Swagger
    - Map SignalR hub route
 
-2. **Controllers** (`Bourse.API/Controllers/`)
+2. **Controllers** (`StockScreener.API/Controllers/`)
 
-   | Controller | Endpoints |
-   |-----------|-----------|
-   | `ScreenerController` | `GET /api/screener/filter`, `GET /api/screener/presets`, `POST /api/screener/presets`, `DELETE /api/screener/presets/{id}` |
-   | `StocksController` | `GET /api/stocks/{symbol}`, `GET /api/stocks/{symbol}/price-history`, `GET /api/stocks/{symbol}/fundamentals`, `GET /api/stocks/{symbol}/indicators` |
-   | `WatchlistController` | `GET /api/watchlists`, `POST /api/watchlists`, `DELETE /api/watchlists/{id}`, `POST /api/watchlists/{id}/stocks`, `DELETE /api/watchlists/{id}/stocks/{symbol}` |
-   | `MarketDataController` | `POST /api/market-data/sync` (manual trigger) |
+   | Controller             | Endpoints                                                                                                                                                       |
+   | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+   | `ScreenerController`   | `GET /api/screener/filter`, `GET /api/screener/presets`, `POST /api/screener/presets`, `DELETE /api/screener/presets/{id}`                                      |
+   | `StocksController`     | `GET /api/stocks/{symbol}`, `GET /api/stocks/{symbol}/price-history`, `GET /api/stocks/{symbol}/fundamentals`, `GET /api/stocks/{symbol}/indicators`            |
+   | `WatchlistController`  | `GET /api/watchlists`, `POST /api/watchlists`, `DELETE /api/watchlists/{id}`, `POST /api/watchlists/{id}/stocks`, `DELETE /api/watchlists/{id}/stocks/{symbol}` |
+   | `MarketDataController` | `POST /api/market-data/sync` (manual trigger)                                                                                                                   |
 
-3. **SignalR Hub** (`Bourse.API/Hubs/MarketDataHub.cs`)
+3. **SignalR Hub** (`StockScreener.API/Hubs/MarketDataHub.cs`)
    - Method: `SubscribeToSymbols(string[] symbols)`
    - Broadcast: `PriceUpdate` event with symbol + price + change
 
@@ -246,30 +246,30 @@ This guide is the single source of truth for the development sequence. Each phas
    - Register `SignalRService`
    - Register Syncfusion license + components
 
-2. **Services** (`Bourse.Presentation/Services/`)
+2. **Services** (`StockScreener.Presentation/Services/`)
    - `ApiClient.cs` — typed HTTP client wrapping all API endpoints
    - `SignalRService.cs` — connect/disconnect, subscribe to symbols, expose `IObservable<PriceUpdate>`
    - `LocalStorageService.cs` — persist filter presets locally
 
-3. **ViewModels** (`Bourse.Presentation/ViewModels/`)
+3. **ViewModels** (`StockScreener.Presentation/ViewModels/`)
    - `ScreenerViewModel.cs` — holds filter state, results, pagination, sort
    - `StockDetailViewModel.cs` — stock data + chart data
    - `WatchlistViewModel.cs` — watchlist CRUD state
 
-4. **Pages** (`Bourse.Presentation/Pages/`)
+4. **Pages** (`StockScreener.Presentation/Pages/`)
    - `Screener.razor` — main screener page, binds `ScreenerViewModel`
    - `StockDetail.razor` — `/stocks/{symbol}` route
    - `Watchlist.razor`
    - `Settings.razor`
 
-5. **Shared Components** (`Bourse.Presentation/Components/`)
+5. **Shared Components** (`StockScreener.Presentation/Components/`)
 
-   | Folder | Components |
-   |--------|-----------|
+   | Folder     | Components                                                                                                          |
+   | ---------- | ------------------------------------------------------------------------------------------------------------------- |
    | `Filters/` | `FilterPanel.razor`, `PriceFilter.razor`, `MarketCapFilter.razor`, `TechnicalFilter.razor`, `ValuationFilter.razor` |
-   | `Grid/` | `StockGrid.razor` (Syncfusion SfGrid), `StockGridRow.razor` |
-   | `Charts/` | `CandlestickChart.razor` (Syncfusion SfChart), `PriceLineChart.razor` |
-   | `Common/` | `PriceDisplay.razor` (green/red coloring), `LoadingSpinner.razor`, `ConnectionStatus.razor` |
+   | `Grid/`    | `StockGrid.razor` (Syncfusion SfGrid), `StockGridRow.razor`                                                         |
+   | `Charts/`  | `CandlestickChart.razor` (Syncfusion SfChart), `PriceLineChart.razor`                                               |
+   | `Common/`  | `PriceDisplay.razor` (green/red coloring), `LoadingSpinner.razor`, `ConnectionStatus.razor`                         |
 
 6. **Real-time integration**
    - `Screener.razor` subscribes to `SignalRService` on load
@@ -303,15 +303,15 @@ This guide is the single source of truth for the development sequence. Each phas
 
 ### Test Targets
 
-| Area | Type | Priority |
-|------|------|----------|
-| `IndicatorCalculator` — RSI, MACD, SMA | Unit | P0 |
-| `ScreenerEngine` — filter combinations | Unit | P0 |
-| `ScreenerService` | Unit (mocked repos) | P0 |
-| `StockService` | Unit | P1 |
-| `StockRepository` | Integration (InMemory EF) | P1 |
-| Screener API endpoint | Integration (WebApplicationFactory) | P1 |
-| Screener UI filtering flow | E2E (Playwright, optional) | P2 |
+| Area                                   | Type                                | Priority |
+| -------------------------------------- | ----------------------------------- | -------- |
+| `IndicatorCalculator` — RSI, MACD, SMA | Unit                                | P0       |
+| `ScreenerEngine` — filter combinations | Unit                                | P0       |
+| `ScreenerService`                      | Unit (mocked repos)                 | P0       |
+| `StockService`                         | Unit                                | P1       |
+| `StockRepository`                      | Integration (InMemory EF)           | P1       |
+| Screener API endpoint                  | Integration (WebApplicationFactory) | P1       |
+| Screener UI filtering flow             | E2E (Playwright, optional)          | P2       |
 
 ### Checklist
 - [ ] All P0 unit tests passing
@@ -372,12 +372,12 @@ Phase 10 → Performance & hardening
 
 ## Key Conventions
 
-| Convention | Rule |
-|-----------|------|
-| **Dependency direction** | Domain ← Application ← Infrastructure → API |
-| **No framework refs in Domain** | Domain is pure C# — no EF, no ASP.NET |
-| **Use DTOs at boundaries** | Controllers and Blazor pages never use Domain entities directly |
-| **Primary Constructors** | Use for all Application services (C# 12+) |
-| **Nullable reference types** | Enabled in all projects (`<Nullable>enable</Nullable>`) |
-| **Async all the way** | All I/O methods are `async Task<T>` — no `.Result` or `.Wait()` |
-| **Migrations in Infrastructure** | EF migrations live in `Bourse.Infrastructure`, startup project is `Bourse.API` |
+| Convention                       | Rule                                                                                         |
+| -------------------------------- | -------------------------------------------------------------------------------------------- |
+| **Dependency direction**         | Domain ← Application ← Infrastructure → API                                                  |
+| **No framework refs in Domain**  | Domain is pure C# — no EF, no ASP.NET                                                        |
+| **Use DTOs at boundaries**       | Controllers and Blazor pages never use Domain entities directly                              |
+| **Primary Constructors**         | Use for all Application services (C# 12+)                                                    |
+| **Nullable reference types**     | Enabled in all projects (`<Nullable>enable</Nullable>`)                                      |
+| **Async all the way**            | All I/O methods are `async Task<T>` — no `.Result` or `.Wait()`                              |
+| **Migrations in Infrastructure** | EF migrations live in `StockScreener.Infrastructure`, startup project is `StockScreener.API` |
